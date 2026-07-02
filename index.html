@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +9,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="gpa_calculator.css">
 </head>
+
 <body>
+    
+    <video autoplay muted loop playsinline id="bg-video">
+        <source src="https://assets.mixkit.co/videos/preview/mixkit-stars-in-space-1610-large.mp4" type="video/mp4">
+    </video>
+    <div class="video-overlay"></div>
 
     <div class="container">
         <h1>GPA Calculator</h1>
@@ -153,10 +160,15 @@
                         <span id="res_final">0</span>
                     </div>
                 </div>
+                <div class="grade-note">
+                    <strong>Note:</strong> This is only a minimum estimate of your CGPA. It is an absolute grade, not a
+                    relative grade. It's not final, and your GPA will likely increase!
+                </div>
             </div>
         </div>
     </div>
 
     <script src="gpa_calculator.js"></script>
 </body>
+
 </html>
