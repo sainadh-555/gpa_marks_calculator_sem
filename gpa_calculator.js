@@ -37,15 +37,15 @@ function calculateGPA() {
     let code_sem = getVal('code_sem');
 
     // Your calculations exactly translated from Python
-    let psup_grade = (psup_internal + (psup_lab * (16/40)) + (psup_sem * (24/60)));
-    let tec_grade = (tec_internal + (tec_lab * (16/40)) + (tec_sem * (24/60)));
-    let ep_grade = (ep_internal + (ep_lab * (16/40)) + (ep_sem * (24/60)));
-    let egd_grade = (egd_internal + egd_lab);
-    let es_grade = (es_internal + es_lab);
-    let cs_grade = (cs_internal + cs_lab);
-    let code_grade = (code_internal + (code_sem * 40/60));
+    let psup_grade = (psup_internal + (psup_lab * (16 / 40)) + (psup_sem * (24 / 60))) / 10.0;
+    let tec_grade = (tec_internal + (tec_lab * (16 / 40)) + (tec_sem * (24 / 60))) / 10.0;
+    let ep_grade = (ep_internal + (ep_lab * (16 / 40)) + (ep_sem * (24 / 60))) / 10.0;
+    let egd_grade = (egd_internal + egd_lab) / 10.0;
+    let es_grade = (es_internal + es_lab) / 10.0;
+    let cs_grade = (cs_internal + cs_lab) / 10.0;
+    let code_grade = (code_internal + (code_sem * 40 / 60)) / 10.0;
 
-    let final_grade = (4*(ep_grade + code_grade)) + (3*(psup_grade + es_grade + egd_grade)) + (2*(tec_grade)) + (1*(cs_grade));
+    let final_grade = (4 * (ep_grade + code_grade) + 3 * (psup_grade + es_grade + egd_grade) + 2 * (tec_grade) + (cs_grade)) / 20.0;
 
     // Display results, formatting to 2 decimal places for neatness
     document.getElementById('res_psup').innerText = psup_grade.toFixed(2);
@@ -59,7 +59,7 @@ function calculateGPA() {
 
     // Show the results section with a nice fade in
     document.getElementById('results-section').style.display = 'block';
-    
+
     // Scroll down to results smoothly
     document.getElementById('results-section').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
