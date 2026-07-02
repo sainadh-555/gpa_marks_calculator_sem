@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic GPA Calculator</title>
+    <!-- Modern Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="gpa_calculator.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>GPA Calculator</h1>
+        <p class="subtitle">Enter your marks below to calculate your final grade.</p>
+
+        <div class="subjects-grid">
+            <!-- 1. PSUP -->
+            <div class="subject-card">
+                <h3>1. PSUP</h3>
+                <div class="inputs-row">
+                    <div class="input-group">
+                        <label>Internal</label>
+                        <input type="number" id="psup_int" placeholder="0">
+                    </div>
+                    <div class="input-group">
+                        <label>Lab</label>
+                        <input type="number" id="psup_lab" placeholder="0">
+                    </div>
+                    <div class="input-group">
+                        <label>Sem</label>
+                        <input type="number" id="psup_sem" placeholder="0">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. TEC -->
+            <div class="subject-card">
+                <h3>2. TEC</h3>
+                <div class="inputs-row">
+                    <div class="input-group">
+                        <label>Internal</label>
+                        <input type="number" id="tec_int" placeholder="0">
+                    </div>
+                    <div class="input-group">
+                        <label>Lab</label>
+                        <input type="number" id="tec_lab" placeholder="0">
+                    </div>
+                    <div class="input-group">
+                        <label>Sem</label>
+                        <input type="number" id="tec_sem" placeholder="0">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. EP -->
+            <div class="subject-card">
+                <h3>3. EP</h3>
+                <div class="inputs-row">
+                    <div class="input-group">
+                        <label>Internal</label>
+                        <input type="number" id="ep_int" placeholder="0">
+                    </div>
+                    <div class="input-group">
+                        <label>Lab</label>
+                        <input type="number" id="ep_lab" placeholder="0">
+                    </div>
+                    <div class="input-group">
+                        <label>Sem</label>
+                        <input type="number" id="ep_sem" placeholder="0">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. EGD -->
+            <div class="subject-card">
+                <h3>4. EGD</h3>
+                <div class="inputs-row">
+                    <div class="input-group">
+                        <label>Internal</label>
+                        <input type="number" id="egd_int" placeholder="0">
+                    </div>
+                    <div class="input-group">
+                        <label>Lab</label>
+                        <input type="number" id="egd_lab" placeholder="0">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. ES -->
+            <div class="subject-card">
+                <h3>5. ES</h3>
+                <div class="inputs-row">
+                    <div class="input-group">
+                        <label>Internal</label>
+                        <input type="number" id="es_int" placeholder="0">
+                    </div>
+                    <div class="input-group">
+                        <label>Lab</label>
+                        <input type="number" id="es_lab" placeholder="0">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. CS -->
+            <div class="subject-card">
+                <h3>6. CS</h3>
+                <div class="inputs-row">
+                    <div class="input-group">
+                        <label>Internal</label>
+                        <input type="number" id="cs_int" placeholder="0">
+                    </div>
+                    <div class="input-group">
+                        <label>Lab</label>
+                        <input type="number" id="cs_lab" placeholder="0">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7. CODE -->
+            <div class="subject-card">
+                <h3>7. CODE</h3>
+                <div class="inputs-row">
+                    <div class="input-group">
+                        <label>Internal</label>
+                        <input type="number" id="code_int" placeholder="0">
+                    </div>
+                    <div class="input-group">
+                        <label>Sem</label>
+                        <input type="number" id="code_sem" placeholder="0">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button class="calc-btn" onclick="calculateGPA()">Calculate Result</button>
+
+        <div id="results-section">
+            <div class="results-card">
+                <h3 style="margin-bottom: 20px; font-size: 1.5rem;">Subject Grades</h3>
+                <div class="results-grid">
+                    <div class="result-item"><span>PSUP</span><strong id="res_psup">0</strong></div>
+                    <div class="result-item"><span>TEC</span><strong id="res_tec">0</strong></div>
+                    <div class="result-item"><span>EP</span><strong id="res_ep">0</strong></div>
+                    <div class="result-item"><span>EGD</span><strong id="res_egd">0</strong></div>
+                    <div class="result-item"><span>ES</span><strong id="res_es">0</strong></div>
+                    <div class="result-item"><span>CS</span><strong id="res_cs">0</strong></div>
+                    <div class="result-item"><span>CODE</span><strong id="res_code">0</strong></div>
+                </div>
+                <div class="final-grade">
+                    <div>
+                        <div class="label">Final Grade</div>
+                        <span id="res_final">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="gpa_calculator.js"></script>
+</body>
+</html>
