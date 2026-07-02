@@ -195,6 +195,7 @@ p.subtitle {
 
 .inputs-row {
     display: flex;
+    flex-direction: column;
     gap: 15px;
 }
 
@@ -214,6 +215,7 @@ p.subtitle {
 }
 
 .input-group input {
+    width: 100%;
     background: rgba(0, 0, 0, 0.2);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 12px;
@@ -421,4 +423,25 @@ input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button { 
     -webkit-appearance: none; 
     margin: 0; 
+}
+
+/* Cosmos Glitter Mouse Trail */
+.cosmos-glitter {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    animation: glitterAnim 1s linear forwards;
+    box-shadow: 0 0 8px currentColor;
+}
+
+@keyframes glitterAnim {
+    0% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0) translateY(20px);
+    }
 }
