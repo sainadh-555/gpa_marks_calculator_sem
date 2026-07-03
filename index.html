@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> GPA Calculator</title>
+    <title>Dynamic GPA Calculator</title>
     <!-- Modern Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="gpa_calculator.css">
@@ -149,21 +149,31 @@
                     <div class="result-item"><span>CS</span><strong id="res_cs">0</strong></div>
                     <div class="result-item"><span>CODE</span><strong id="res_code">0</strong></div>
                 </div>
+                
+                <div class="chart-container" style="position: relative; height: 300px; width: 100%; margin-top: 30px; margin-bottom: 20px;">
+                    <canvas id="gradesChart"></canvas>
+                </div>
+
                 <div class="final-grade">
                     <div>
                         <div class="label">Final Grade</div>
                         <span id="res_final">0</span>
                     </div>
                 </div>
+                <div style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
+                    <button class="calc-btn" style="background: linear-gradient(135deg, #10b981, #3b82f6); width: auto; padding: 12px 30px; display: inline-block; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);" onclick="downloadPDF()">Download Result PDF</button>
+                </div>
                 <div class="grade-note">
                     <strong>Note:</strong> This is only a minimum estimate of your CGPA. It is an absolute grade, not a
                     relative grade. It's not final, and your GPA will likely increase!
-                    CREATOR'S GPA is 8.92
                 </div>
             </div>
         </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="gpa_calculator.js"></script>
 </body>
 
