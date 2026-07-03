@@ -1,3 +1,5 @@
+let gradesChartInstance = null;
+
 // Helper function to get float value from input, defaulting to 0.0 if empty
 function getVal(id) {
     let val = parseFloat(document.getElementById(id).value);
@@ -37,15 +39,15 @@ function calculateGPA() {
     let code_sem = getVal('code_sem');
 
     // Your calculations exactly translated from Python
-    let psup_grade = (psup_internal + (psup_lab * (16 / 40)) + (psup_sem * (24 / 60))) / 10.0;
-    let tec_grade = (tec_internal + (tec_lab * (16 / 40)) + (tec_sem * (24 / 60))) / 10.0;
-    let ep_grade = (ep_internal + (ep_lab * (16 / 40)) + (ep_sem * (24 / 60))) / 10.0;
-    let egd_grade = (egd_internal + egd_lab) / 10.0;
-    let es_grade = (es_internal + es_lab) / 10.0;
-    let cs_grade = (cs_internal + cs_lab) / 10.0;
-    let code_grade = (code_internal + (code_sem * 40 / 60)) / 10.0;
+    let psup_grade = (psup_internal + (psup_lab * (16/40)) + (psup_sem * (24/60)));
+    let tec_grade = (tec_internal + (tec_lab * (16/40)) + (tec_sem * (24/60)));
+    let ep_grade = (ep_internal + (ep_lab * (16/40)) + (ep_sem * (24/60)));
+    let egd_grade = (egd_internal + egd_lab);
+    let es_grade = (es_internal + es_lab);
+    let cs_grade = (cs_internal + cs_lab);
+    let code_grade = (code_internal + (code_sem * 40/60));
 
-    let final_grade = (4 * (ep_grade + code_grade) + 3 * (psup_grade + es_grade + egd_grade) + 2 * (tec_grade) + (cs_grade)) / 20.0;
+    let final_grade = (4*(ep_grade + code_grade)) + (3*(psup_grade + es_grade + egd_grade)) + (2*(tec_grade)) + (1*(cs_grade));
 
     // Display results, formatting to 2 decimal places for neatness
     document.getElementById('res_psup').innerText = psup_grade.toFixed(2);
@@ -59,7 +61,187 @@ function calculateGPA() {
 
     // Show the results section with a nice fade in
     document.getElementById('results-section').style.display = 'block';
+    
+    // Draw the chart
+    drawChart([psup_grade, tec_grade, ep_grade, egd_grade, es_grade, cs_grade, code_grade]);
 
     // Scroll down to results smoothly
     document.getElementById('results-section').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+// Cosmos Glitter Mouse Trail Effect
+document.addEventListener('mousemove', function(e) {
+    // Only spawn occasionally for performance and aesthetic spacing
+    if (Math.random() > 0.3) return;
+    
+    const glitter = document.createElement('div');
+    glitter.className = 'cosmos-glitter';
+    
+    // Add scroll offset so it stays under the cursor when scrolling
+    const scrollX = window.scrollX || document.documentElement.scrollLeft;
+    const scrollY = window.scrollY || document.documentElement.scrollTop;
+    
+    const offsetX = (Math.random() - 0.5) * 30;
+    const offsetY = (Math.random() - 0.5) * 30;
+    
+    glitter.style.left = `${e.clientX + scrollX + offsetX}px`;
+    glitter.style.top = `${e.clientY + scrollY + offsetY}px`;
+    
+    // Random cosmos colors
+    const colors = ['#8b5cf6', '#ec4899', '#3b82f6', '#ffffff', '#c084fc', '#fbcfe8'];
+    glitter.style.color = colors[Math.floor(Math.random() * colors.length)];
+    glitter.style.background = glitter.style.color;
+    
+    // Random size
+    const size = Math.random() * 4 + 2;
+    glitter.style.width = `${size}px`;
+    glitter.style.height = `${size}px`;
+    
+    document.body.appendChild(glitter);
+    
+    // Clean up
+    setTimeout(() => {
+        glitter.remove();
+    }, 1000);
+});
+
+function downloadPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    // Background Color
+    doc.setFillColor(248, 250, 252);
+    doc.rect(0, 0, 210, 297, 'F');
+
+    // Header Shape
+    doc.setFillColor(139, 92, 246);
+    doc.rect(0, 0, 210, 40, 'F');
+
+    // Adding Title
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(26);
+    doc.setTextColor(255, 255, 255);
+    doc.text("Academic Performance Report", 105, 22, null, null, "center");
+
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(220, 220, 255);
+    doc.text("Subject-wise Grades and Final SGPA", 105, 30, null, null, "center");
+
+    // Get table data
+    const tableData = [
+        ["PSUP", document.getElementById('res_psup').innerText],
+        ["TEC", document.getElementById('res_tec').innerText],
+        ["EP", document.getElementById('res_ep').innerText],
+        ["EGD", document.getElementById('res_egd').innerText],
+        ["ES", document.getElementById('res_es').innerText],
+        ["CS", document.getElementById('res_cs').innerText],
+        ["CODE", document.getElementById('res_code').innerText],
+    ];
+
+    doc.autoTable({
+        startY: 55,
+        head: [['Subject', 'Calculated Grade']],
+        body: tableData,
+        theme: 'striped',
+        headStyles: { 
+            fillColor: [59, 130, 246], 
+            textColor: 255, 
+            fontStyle: 'bold', 
+            halign: 'center',
+            fontSize: 14
+        },
+        bodyStyles: { 
+            halign: 'center', 
+            fontSize: 12,
+            textColor: [50, 50, 50]
+        },
+        alternateRowStyles: { 
+            fillColor: [241, 245, 249]
+        },
+        margin: { left: 25, right: 25 }
+    });
+
+    const finalGrade = document.getElementById('res_final').innerText;
+    
+    // Add final score section in a nice box
+    const finalY = doc.lastAutoTable.finalY + 20;
+    
+    doc.setDrawColor(16, 185, 129); // emerald-500
+    doc.setFillColor(236, 253, 245); // emerald-50
+    doc.setLineWidth(1);
+    doc.roundedRect(45, finalY, 120, 30, 5, 5, 'FD');
+
+    doc.setFontSize(16);
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(50, 50, 50);
+    doc.text("Final SGPA / Grade", 105, finalY + 12, null, null, "center");
+    
+    doc.setFontSize(22);
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(16, 185, 129);
+    doc.text(finalGrade, 105, finalY + 22, null, null, "center");
+
+    // Add footer
+    const date = new Date().toLocaleDateString();
+    doc.setFontSize(10);
+    doc.setTextColor(150);
+    doc.setFont("helvetica", "italic");
+    doc.text(`Generated by Dynamic GPA Calculator on ${date}`, 105, 285, null, null, "center");
+
+    // Save the PDF
+    doc.save(`GPA_Result.pdf`);
+}
+
+function drawChart(gradesData) {
+    const ctx = document.getElementById('gradesChart').getContext('2d');
+    
+    if (gradesChartInstance) {
+        gradesChartInstance.destroy();
+    }
+    
+    gradesChartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['PSUP', 'TEC', 'EP', 'EGD', 'ES', 'CS', 'CODE'],
+            datasets: [{
+                label: 'Calculated Grade',
+                data: gradesData,
+                backgroundColor: [
+                    'rgba(139, 92, 246, 0.7)',
+                    'rgba(236, 72, 153, 0.7)',
+                    'rgba(59, 130, 246, 0.7)',
+                    'rgba(16, 185, 129, 0.7)',
+                    'rgba(245, 158, 11, 0.7)',
+                    'rgba(14, 165, 233, 0.7)',
+                    'rgba(99, 102, 241, 0.7)'
+                ],
+                borderColor: [
+                    'rgba(139, 92, 246, 1)',
+                    'rgba(236, 72, 153, 1)',
+                    'rgba(59, 130, 246, 1)',
+                    'rgba(16, 185, 129, 1)',
+                    'rgba(245, 158, 11, 1)',
+                    'rgba(14, 165, 233, 1)',
+                    'rgba(99, 102, 241, 1)'
+                ],
+                borderWidth: 2,
+                borderRadius: 6
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
 }
